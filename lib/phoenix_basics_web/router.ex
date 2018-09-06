@@ -23,7 +23,7 @@ defmodule BasicsWeb.Router do
   scope "/signup", BasicsWeb.Signup, as: :signup do
     pipe_through(:browser)
 
-    resources("/", UserController)
+    resources("/", UserController, only: [:new, :create])
   end
 
   # Other scopes may use custom stacks.
