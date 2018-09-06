@@ -19,7 +19,7 @@ defmodule BasicsWeb.Signup.UserControllerTest do
   end
 
   describe "create user" do
-    test "redirects to show when data is valid", %{conn: conn} do
+    test "redirects to homepage when data is valid", %{conn: conn} do
       conn = post(conn, signup_user_path(conn, :create), user: @create_attrs)
 
       assert redirected_to(conn) == page_path(conn, :index)

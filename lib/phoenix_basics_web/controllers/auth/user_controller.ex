@@ -10,14 +10,16 @@ defmodule BasicsWeb.Auth.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Auth.create_user(user_params) do
-      {:ok, user} ->
+    case Auth.authenticate_user(user_params) do
+      {:ok, _user} ->
         conn
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: page_path(conn, :show, user))
+        |> put_flash(:info, "User Logged In Successfully.")
+        |> redirect(to: page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:error, "Username/Password combination did not exist.")
+        |> render("new.html", changeset: changeset)
     end
   end
 end
