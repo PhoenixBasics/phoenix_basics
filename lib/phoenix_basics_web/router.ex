@@ -26,6 +26,12 @@ defmodule BasicsWeb.Router do
     resources("/", UserController, only: [:new, :create])
   end
 
+  scope "/auth", BasicsWeb.Auth, as: :auth do
+    pipe_through(:browser)
+
+    resources("/", UserController, only: [:new, :create])
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", BasicsWeb do
   #   pipe_through :api
