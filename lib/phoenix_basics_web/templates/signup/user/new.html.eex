@@ -1,3 +1,5 @@
-<h2>New User</h2>
+<div class="container">
+  <h2>New User</h2>
 
-<%= render BasicsWeb.SharedView, "user_form.html", Map.put(assigns, :action, signup_user_path(@conn, :create)) %>
+  <%= render BasicsWeb.SharedView, "user_form.html", Map.put(assigns, :action, signup_user_path(@conn, :create)) %>
+</div>

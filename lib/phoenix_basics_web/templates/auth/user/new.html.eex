@@ -1,3 +1,5 @@
-<h2>Log In</h2>
+<div class="container">
+  <h2>Log In</h2>
 
-<%= render BasicsWeb.SharedView, "user_form.html", Map.put(assigns, :action, auth_user_path(@conn, :create)) %>
+  <%= render BasicsWeb.SharedView, "user_form.html", Map.put(assigns, :action, auth_user_path(@conn, :create)) %>
+</div>

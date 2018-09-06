@@ -1,0 +1,312 @@
+/* This file is for your main application css. */
+body {
+  margin-top: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  background-color: #f0f2f2;
+}
+
+a {
+  text-decoration: none;
+  color: #284c6e;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+.section-white {
+  background-color: #FFF;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.header {
+  background-color: #284c6e;
+  margin-bottom: 0;
+}
+
+.header a {
+  color: #FFF;
+}
+
+.header a:hover, .header a:focus {
+  color: #284c6e;
+}
+
+.header .nav {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.header .fa-bars {
+  font-size: 24px;
+}
+
+hr {
+  color: #8573c6;
+}
+
+.btn {
+  background-color: #284c6e;
+  border: 0;
+  color: #FFF;
+  border-radius: 50px;
+  text-transform: uppercase;
+  word-spacing: 2px;
+}
+
+.btn:hover, .btn:focus {
+  background-color: #ddd;
+  color: #284c6e;
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+.card{
+  padding: 15px;
+}
+
+.venue img {
+  width: 100%;
+}
+
+.subheader {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: inherit;
+}
+
+.venue iframe {
+  border: 1px solid #fff;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.smalltext{
+  font-size: 12px;
+}
+
+.subtext {
+  color: #999;
+  font-size: 12px;
+  margin: 0px;
+}
+
+.talk h2 {
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+.card {
+  border: 0;
+  border-radius: 5px;
+}
+
+.schedule__action {
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: bold;
+  color: #284c6e;
+  vertical-align: middle;
+}
+
+.schedule__action .far {
+  font-size: 20px;
+  padding-right: 5px;
+}
+
+hr {
+  border-top: 1px solid #bbb;
+}
+
+.speaker img {
+  width: 100px;
+}
+
+.speaker__handle .fab {
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+.speaker__handle {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.speaker__link {
+  margin-top: 35px;
+}
+
+.talk {
+  margin-top: 20px;
+}
+
+.talk .subheader {
+  margin-bottom: 14px;
+}
+
+.attendee img {
+  width: 70px;
+  border: 1px solid #4f235f;
+}
+
+.attendee .card {
+    background-color: #f0f2f2;
+    padding: 5px;
+}
+
+.attendee .card-body {
+  background-color: #FFF;
+  border-radius: 5px;
+}
+
+.attendee-wrapper {
+  padding: 5px;
+}
+
+.attendee {
+  text-align: center;
+}
+
+.attendee__check {
+  float: left;
+  position: absolute;
+  top: 76px;
+  left: 112px;
+  color: #4f235f;
+  font-size: 20px;
+}
+
+.talk__audience {
+  color: #FFF;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.talk__category {
+  background-color: #4B285B;
+  color: #FFF;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.dates .card {
+  margin: 3px;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: #284c6e;
+  border: 1px solid #284c6e;
+  text-align: center;
+  width: 60px;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.dates .card-body {
+  padding: 3px;
+}
+
+.dates .fas {
+  color: #284c6e;
+  font-size: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.talk-index__tab {
+  margin-top: 20px;
+}
+
+.talk-tab__link {
+  padding-left: 17px;
+  padding-right: 19px;
+  border-bottom: 4px solid #FFF;
+  text-decoration: none;
+  margin-right: 3px;
+}
+
+.talk-tab__link:hover, .talk-tab__link:focus, .talk-tab__link-active {
+  border-bottom: 4px solid #284c6e;
+  color: #284c6e;
+}
+
+.talk-index {
+  padding-bottom: 0;
+}
+
+.schedule .card {
+  margin: 15px;
+}
+
+.schedule a {
+  color: #444;
+}
+.schedule__talk-title {
+  font-weight: 300;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.schedule__details {
+  margin-bottom: 7px;
+  font-size: 12px;
+}
+
+.schedule__talk-link {
+  font-size: 30px;
+  color: #284c6e;
+}
+
+.speaker-details > .details{
+  margin-top: 100px;
+  text-align: center;
+}
+
+.speaker-details__pic {
+  width: 110px;
+  border: 1px solid #284c6e;
+  position: absolute;
+  top: -60px;
+  left: 42%;
+  text-align: center;
+}
+
+.speaker-details .speaker__info h4 {
+  margin-top: 50px;
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.gray {
+  color: #888;
+}
+
+.schedule__date {
+  text-align: center;
+}
+
+.schedule__talk {
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.schedule__talk:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.alert {
+  margin-top: 0;
+  margin-bottom: 0;
+}
