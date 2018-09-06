@@ -19,6 +19,19 @@ defmodule Basics.SignupTest do
       assert {:error, %Ecto.Changeset{}} = Signup.create_user(@invalid_attrs)
     end
 
+    test "create_user/1 requires a long password" do
+      invalid = Map.put(@valid_attrs, :password, "1234567")
+
+      assert {:error, %Ecto.Changeset{}} = Signup.create_user(invalid)
+    end
+
+    test "create_user/1 rejects blacklist passwords" do
+      [reject_password | _] = User.blacklisted_passwords()
+      invalid = Map.put(@valid_attrs, :password, reject_password)
+
+      assert {:error, %Ecto.Changeset{}} = Signup.create_user(invalid)
+    end
+
     test "change_user/1 returns a user changeset" do
       assert %Ecto.Changeset{} = Signup.change_user(%User{})
     end
