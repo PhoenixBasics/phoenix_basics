@@ -45,6 +45,7 @@ defmodule Basics.Mixfile do
       # For authentication
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~>4.0"},
+      {:guardian, "~> 1.0"},
 
       # Linting
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}

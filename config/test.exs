@@ -17,3 +17,7 @@ config :phoenix_basics, Basics.Repo,
   database: "phoenix_basics_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :phoenix_basics, BasicsWeb.Guardian.Tokenizer,
+  issuer: "phoenix_basics",
+  secret_key: "x"

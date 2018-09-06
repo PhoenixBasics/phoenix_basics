@@ -62,3 +62,7 @@ config :phoenix_basics, Basics.Repo,
   database: "phoenix_basics_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :phoenix_basics, BasicsWeb.Guardian.Tokenizer,
+  issuer: "phoenix_basics",
+  secret_key: "hLHQsT1AmbgE4bfRYbVEsefepbFwFnhp5yCyv3zxVisHXiVy2mSvT3hO+DLx47DK"

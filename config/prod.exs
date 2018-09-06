@@ -21,6 +21,10 @@ config :phoenix_basics, BasicsWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :phoenix_basics, BasicsWeb.Guardian.Tokenizer,
+  issuer: "phoenix_basics",
+  secret_key: Map.fetch!(System.get_env(), "GUARDIAN_KEY")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

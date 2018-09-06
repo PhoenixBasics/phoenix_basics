@@ -23,11 +23,18 @@ defmodule BasicsWeb.Signup.UserControllerTest do
       conn = post(conn, signup_user_path(conn, :create), user: @create_attrs)
 
       assert redirected_to(conn) == page_path(conn, :index)
+
+      conn = get(conn, page_path(conn, :index))
+
+      refute is_nil(conn.assigns.current_user)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, signup_user_path(conn, :create), user: @invalid_attrs)
       assert html_response(conn, 200) =~ "New User"
+
+      conn = get(conn, page_path(conn, :index))
+      assert is_nil(conn.assigns.current_user)
     end
   end
 end

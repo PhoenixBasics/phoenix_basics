@@ -9,25 +9,39 @@ defmodule BasicsWeb.Router do
     plug(:put_secure_browser_headers)
   end
 
+  pipeline :guardian do
+    plug(BasicsWeb.Guardian.Plug)
+    plug(BasicsWeb.Guardian.CurrentUserPlug)
+  end
+
+  pipeline :ensure_auth do
+    plug(Guardian.Plug.EnsureAuthenticated)
+  end
+
   pipeline :api do
     plug(:accepts, ["json"])
   end
 
   scope "/", BasicsWeb do
     # Use the default browser stack
-    pipe_through(:browser)
+    pipe_through([:browser, :guardian])
 
     get("/", PageController, :index)
   end
 
   scope "/signup", BasicsWeb.Signup, as: :signup do
-    pipe_through(:browser)
+    pipe_through([:browser, :guardian])
 
     resources("/", UserController, only: [:new, :create])
   end
 
+  scope "/", BasicsWeb.Auth, as: :auth do
+    pipe_through([:browser, :guardian, :ensure_auth])
+    post("/logout", UserController, :delete)
+  end
+
   scope "/auth", BasicsWeb.Auth, as: :auth do
-    pipe_through(:browser)
+    pipe_through([:browser, :guardian])
 
     resources("/", UserController, only: [:new, :create])
   end
