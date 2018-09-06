@@ -1,5 +1,11 @@
 defmodule Basics.Application do
+  @moduledoc """
+  A simple Phoenix Framework example app for organizing personal agendas at
+  conferences
+  """
+
   use Application
+  alias BasicsWeb.Endpoint
 
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
@@ -11,7 +17,7 @@ defmodule Basics.Application do
       # Start the Ecto repository
       supervisor(Basics.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(BasicsWeb.Endpoint, [])
+      supervisor(Endpoint, [])
       # Start your own worker by calling: Basics.Worker.start_link(arg1, arg2, arg3)
       # worker(Basics.Worker, [arg1, arg2, arg3]),
     ]
@@ -25,7 +31,7 @@ defmodule Basics.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    BasicsWeb.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end
