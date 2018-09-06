@@ -38,6 +38,9 @@ defmodule BasicsWeb.Router do
   scope "/", BasicsWeb.Auth, as: :auth do
     pipe_through([:browser, :guardian, :ensure_auth])
     post("/logout", UserController, :delete)
+
+    resources("/profiles", ProfileController, only: [:index, :show])
+    resources("/profiles", ProfileController, only: [:edit, :update], singleton: true)
   end
 
   scope "/auth", BasicsWeb.Auth, as: :auth do

@@ -1,0 +1,53 @@
+<h2>Show Profile</h2>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @profile.slug %>
+  </li>
+
+  <li>
+    <strong>Image:</strong>
+    <%= @profile.image %>
+  </li>
+
+  <li>
+    <strong>First:</strong>
+    <%= @profile.first %>
+  </li>
+
+  <li>
+    <strong>Last:</strong>
+    <%= @profile.last %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @profile.company %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @profile.title %>
+  </li>
+
+  <li>
+    <strong>Github:</strong>
+    <%= @profile.github %>
+  </li>
+
+  <li>
+    <strong>Twitter:</strong>
+    <%= @profile.twitter %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @profile.description %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: profile_path(@conn, :edit, @profile) %></span>
+<span><%= link "Back", to: profile_path(@conn, :index) %></span>
