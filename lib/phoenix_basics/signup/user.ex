@@ -5,6 +5,7 @@ defmodule Basics.Signup.User do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Comeonin.Bcrypt
 
   schema "users" do
     field(:password, :string)
@@ -19,5 +20,15 @@ defmodule Basics.Signup.User do
     |> cast(attrs, [:username, :password])
     |> validate_required([:username, :password])
     |> unique_constraint(:username)
+    |> put_pass_hash()
+  end
+
+  defp put_pass_hash(%{valid?: true, changes: params} = changeset) do
+    password = Bcrypt.hashpwsalt(params[:password])
+    change(changeset, password: password)
+  end
+
+  defp put_pass_hash(changeset) do
+    change(changeset, password: "")
   end
 end

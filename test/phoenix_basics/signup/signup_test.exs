@@ -1,6 +1,5 @@
 defmodule Basics.SignupTest do
   use Basics.DataCase
-
   alias Basics.Signup
 
   describe "users" do
@@ -9,18 +8,10 @@ defmodule Basics.SignupTest do
     @valid_attrs %{password: "some password", username: "some username"}
     @invalid_attrs %{password: nil, username: nil}
 
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Signup.create_user()
-
-      user
-    end
-
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Signup.create_user(@valid_attrs)
-      assert user.password == "some password"
+      assert user.password != "some password" and not is_nil(user.password)
+
       assert user.username == "some username"
     end
 
@@ -29,8 +20,7 @@ defmodule Basics.SignupTest do
     end
 
     test "change_user/1 returns a user changeset" do
-      user = user_fixture()
-      assert %Ecto.Changeset{} = Signup.change_user(user)
+      assert %Ecto.Changeset{} = Signup.change_user(%User{})
     end
   end
 end
