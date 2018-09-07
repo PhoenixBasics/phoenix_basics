@@ -5,11 +5,14 @@ defmodule Basics.Schedule.TimeSlot do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Basics.Schedule.Event
 
   schema "time_slots" do
     field(:finish, :naive_datetime)
     field(:slug, :string)
     field(:start, :naive_datetime)
+
+    has_many :events, Event
 
     timestamps()
   end

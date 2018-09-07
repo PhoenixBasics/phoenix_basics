@@ -20,8 +20,6 @@
   </div>
 
   <div class="container schedule">
-    <p class="alert alert-info" role="alert"></p>
-    <p class="alert alert-danger" role="alert"></p>
     <h2 class="schedule__date"><%= @current_date %></h2>
     <%= for slot <- @time_slots do %>
       <div class="card">
@@ -31,44 +29,15 @@
           </h4>
         </div>
         <div class="card-body">
-<!--  -->
+          <%= for event <- slot.events do %>
+            <%= if event.is_talk do %>
+              <%= render "talk.html", conn: @conn, talk: event %>
+            <%= else %>
+              <h3 class="gray"><%= event.title %></h3>
+            <% end %>
+          <% end %>
         </div>
       </div>
     <% end %>
   </div>
 </div>
-
-<%= if @conn.assigns[:current_user] do %>
-  <script>
-    $(document).ready(function() {
-      $('.add-to-schedule').click(function(event) {
-        var parent = $(this).parent();
-        var talkId = parent.data('talk-id');
-        var data = { user_id: <%= @conn.assigns[:current_user].id %>, talk_id: talkId}
-
-        $.post( '/api/users_talks', data)
-            .done(function( data ) {
-              console.log(data.data.id);
-              console.log(parent.find('.remove-from-schedule'));
-              parent.find('.add-to-schedule').hide();
-              parent.find('.remove-from-schedule').data('user-talk-id', data.data.id).show();
-            });
-        })
-
-      $('.remove-from-schedule').click(function(event) {
-        var parent = $(this).parent();
-        var id = $(this).data('user-talk-id');
-
-        $.ajax({
-            url: '/api/users_talks/' + id,
-            type: 'DELETE',
-            success: function(result) {
-              parent.find('.add-to-schedule').show();
-              parent.find('.remove-from-schedule').hide();
-            }
-        });
-      });
-
-    });
-  </script>
-<% end %>

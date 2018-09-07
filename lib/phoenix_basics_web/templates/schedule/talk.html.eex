@@ -1,0 +1,18 @@
+<div class="schedule__talk">
+  <div class="float-right schedule__talk-link">
+    <i class="fas fa-angle-right"></i>
+  </div>
+  <a href="/talks/<%= @talk.id %>">
+    <h3 class="schedule__talk-title">
+      <%= @talk.title %>
+    </h3>
+  </a>
+
+  <div class="schedule__details">
+    <%= full_name(@talk.speakers) %> &nbsp; | &nbsp; <%= @talk.location.name %>
+  </div>
+  <p class="icons">
+    <%= meta_links(@conn, @talk.audiences, "audience") %>
+    <%= meta_links(@conn, @talk.categories, "category") %>
+  </p>
+</div>

@@ -24,6 +24,7 @@ defmodule Basics.Schedule do
   def time_slots_for_day(day_to_return) do
     TimeSlot
     |> where([time_slot], fragment("?::date", time_slot.start) == ^to_date(day_to_return))
+    |> preload([events: [:location, :speakers, :audiences, :categories]])
     |> order_by(asc: :start)
     |> Repo.all
   end

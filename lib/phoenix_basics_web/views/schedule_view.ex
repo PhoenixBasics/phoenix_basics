@@ -1,5 +1,7 @@
 defmodule BasicsWeb.ScheduleView do
   use BasicsWeb, :view
+  alias Basics.Schedule.Category
+  alias Basics.Schedule.Audience
 
   @doc """
   Ok - this bit is a little advanced.
@@ -28,4 +30,20 @@ defmodule BasicsWeb.ScheduleView do
       content_tag(:div, Timex.format!(date, "%e", :strftime), class: "dates__number")
     ]
   end
+
+  def meta_links(conn, items, type) when is_list items do
+    for item <- items do
+      link item.name, to: schedule_path(conn, :index, build_index_params(item)),
+                      class: "btn talk__#{type}"
+    end
+  end
+
+  def full_name(speakers) do
+    speakers
+    |> Enum.map(fn(%{first: first, last: last}) -> "#{first} #{last}" end)
+    |> Enum.join(" && ")
+  end
+
+  def build_index_params(%Category{slug: slug}), do: [category: slug]
+  def build_index_params(%Audience{slug: slug}), do: [audience: slug]
 end

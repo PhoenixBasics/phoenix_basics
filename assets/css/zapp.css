@@ -200,6 +200,10 @@ hr {
   font-weight: 400;
 }
 
+.talk__audience.btn, .talk__category.btn {
+  color: #FFF;
+}
+
 .dates .card {
   margin: 3px;
   font-size: 24px;
