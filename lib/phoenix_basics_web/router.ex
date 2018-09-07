@@ -23,6 +23,13 @@ defmodule BasicsWeb.Router do
   end
 
   scope "/", BasicsWeb do
+    pipe_through([:browser, :guardian, :ensure_auth])
+
+    resources("/profile", ProfileController, only: [:edit, :update], singleton: true)
+    resources("/members", ProfileController, only: [:index, :show])
+  end
+
+  scope "/", BasicsWeb do
     # Use the default browser stack
     pipe_through([:browser, :guardian])
 
@@ -38,9 +45,6 @@ defmodule BasicsWeb.Router do
   scope "/", BasicsWeb.Auth, as: :auth do
     pipe_through([:browser, :guardian, :ensure_auth])
     post("/logout", UserController, :delete)
-
-    resources("/profiles", ProfileController, only: [:index, :show])
-    resources("/profiles", ProfileController, only: [:edit, :update], singleton: true)
   end
 
   scope "/auth", BasicsWeb.Auth, as: :auth do

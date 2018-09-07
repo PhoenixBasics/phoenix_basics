@@ -5,6 +5,7 @@ defmodule Basics.Membership.Profile do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Basics.Membership.User
 
   schema "profiles" do
     field(:company, :string)
@@ -16,26 +17,37 @@ defmodule Basics.Membership.Profile do
     field(:slug, :string)
     field(:title, :string)
     field(:twitter, :string)
-    field(:user_id, :id)
+
+    belongs_to(:user, User)
 
     timestamps()
   end
 
   @doc false
-  def changeset(profile, attrs) do
-    profile
+  def init_changeset(info, attrs) do
+    info
+    |> cast(attrs, [:user_id, :slug])
+    |> validate_required([:user_id, :slug])
+    |> unique_constraint(:user_id)
+    |> unique_constraint(:slug)
+  end
+
+  @doc false
+  def changeset(info, attrs) do
+    info
     |> cast(attrs, [
-      :slug,
-      :image,
       :first,
       :last,
+      :slug,
       :company,
-      :title,
       :github,
       :twitter,
-      :description
+      :description,
+      :title,
+      :image
     ])
-    |> validate_required([:slug, :image, :first, :last])
+    |> validate_required([:first, :last, :slug])
+    |> validate_exclusion(:slug, [:edit, :new])
     |> unique_constraint(:slug)
   end
 end

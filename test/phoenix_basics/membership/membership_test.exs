@@ -2,13 +2,15 @@ defmodule Basics.MembershipTest do
   use Basics.DataCase
 
   alias Basics.Membership
+  alias Basics.Membership.Profile
+  alias Basics.Membership.User
+  alias Basics.Repo
   alias Basics.Signup
+  alias Ecto.Changeset
 
   @valid_attrs %{password: "some password", username: "some username"}
 
   describe "Given a user exists in the database" do
-    alias Basics.Membership.User
-
     setup do
       {:ok, user} = Signup.create_user(@valid_attrs)
 
@@ -29,109 +31,93 @@ defmodule Basics.MembershipTest do
     end
   end
 
-  describe "profiles" do
-    alias Basics.Membership.Profile
+  describe "given a user without a profile" do
+    setup do
+      {:ok, user} = Signup.create_user(@valid_attrs)
 
-    @valid_attrs %{
-      company: "some company",
-      description: "some description",
-      first: "some first",
-      github: "some github",
-      image: "some image",
-      last: "some last",
-      slug: "some slug",
-      title: "some title",
-      twitter: "some twitter"
-    }
+      [user: Membership.get_user(user.id)]
+    end
+
+    test "change_profile/1 returns a profile changeset", %{user: user} do
+      assert is_nil(user.profile)
+      assert %Changeset{} = Membership.change_profile(user)
+
+      updated_user = Membership.get_user(user.id)
+      assert %Profile{} = updated_user.profile
+      assert "user_#{user.id}" == updated_user.profile.slug
+      assert user.id == updated_user.profile.user_id
+    end
+  end
+
+  describe "given a user with a profile" do
     @update_attrs %{
-      company: "some updated company",
-      description: "some updated description",
-      first: "some updated first",
-      github: "some updated github",
-      image: "some updated image",
-      last: "some updated last",
-      slug: "some updated slug",
-      title: "some updated title",
-      twitter: "some updated twitter"
-    }
-    @invalid_attrs %{
-      company: nil,
-      description: nil,
-      first: nil,
-      github: nil,
-      image: nil,
-      last: nil,
-      slug: nil,
-      title: nil,
-      twitter: nil
+      company: "Pattern Toaster",
+      description: "I'm an Elixir Developer who loves BBQ",
+      first: "Brian",
+      github: "mcelaney",
+      image: "n/a",
+      last: "McElaney",
+      slug: "mac2",
+      title: "Director, Product Development",
+      twitter: "mcelaney"
     }
 
-    def profile_fixture(attrs \\ %{}) do
-      {:ok, profile} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Membership.create_profile()
+    @invalid_attrs %{slug: nil}
 
-      profile
+    setup do
+      user = %User{profile: %Profile{slug: "mac"}} |> Repo.insert!()
+
+      [user: Membership.get_user(user.id)]
     end
 
-    test "list_profiles/0 returns all profiles" do
-      profile = profile_fixture()
-      assert Membership.list_profiles() == [profile]
+    test "change_profile/1 returns a profile changeset", %{user: user} do
+      assert user.profile.slug == "mac"
+      assert %Changeset{} = Membership.change_profile(user)
+
+      updated_user = Membership.get_user(user.id)
+      assert %Profile{} = updated_user.profile
+      assert updated_user.profile.slug == "mac"
     end
 
-    test "get_profile!/1 returns the profile with given id" do
-      profile = profile_fixture()
-      assert Membership.get_profile!(profile.id) == profile
+    test "update_profile/2 with valid_params", %{user: user} do
+      Membership.update_profile(user, @update_attrs)
+      user = Membership.get_user(user.id)
+      assert user.profile.company == "Pattern Toaster"
+      assert user.profile.description == "I'm an Elixir Developer who loves BBQ"
+      assert user.profile.first == "Brian"
+      assert user.profile.github == "mcelaney"
+      assert user.profile.image == "n/a"
+      assert user.profile.last == "McElaney"
+      assert user.profile.slug == "mac2"
+      assert user.profile.title == "Director, Product Development"
+      assert user.profile.twitter == "mcelaney"
     end
 
-    test "create_profile/1 with valid data creates a profile" do
-      assert {:ok, %Profile{} = profile} = Membership.create_profile(@valid_attrs)
-      assert profile.company == "some company"
-      assert profile.description == "some description"
-      assert profile.first == "some first"
-      assert profile.github == "some github"
-      assert profile.image == "some image"
-      assert profile.last == "some last"
-      assert profile.slug == "some slug"
-      assert profile.title == "some title"
-      assert profile.twitter == "some twitter"
+    test "update_profile/2 with invalid_params", %{user: user} do
+      result = Membership.update_profile(user, @invalid_attrs)
+      assert {:error, %Changeset{valid?: false, action: :update}} = result
     end
 
-    test "create_profile/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Membership.create_profile(@invalid_attrs)
+    test "get_user/1 with an existing profile_id", %{user: user} do
+      result = Membership.get_profile!(user.profile.id)
+      assert result.slug == "mac"
     end
 
-    test "update_profile/2 with valid data updates the profile" do
-      profile = profile_fixture()
-      assert {:ok, profile} = Membership.update_profile(profile, @update_attrs)
-      assert %Profile{} = profile
-      assert profile.company == "some updated company"
-      assert profile.description == "some updated description"
-      assert profile.first == "some updated first"
-      assert profile.github == "some updated github"
-      assert profile.image == "some updated image"
-      assert profile.last == "some updated last"
-      assert profile.slug == "some updated slug"
-      assert profile.title == "some updated title"
-      assert profile.twitter == "some updated twitter"
+    test "get_user/1 with an non_existing profile_id", %{user: user} do
+      assert_raise Ecto.NoResultsError, fn ->
+        Membership.get_profile!(user.profile.id + 1)
+      end
     end
 
-    test "update_profile/2 with invalid data returns error changeset" do
-      profile = profile_fixture()
-      assert {:error, %Ecto.Changeset{}} = Membership.update_profile(profile, @invalid_attrs)
-      assert profile == Membership.get_profile!(profile.id)
+    test "get_user/1 with an existing profile slug", %{user: user} do
+      result = Membership.get_profile!("mac")
+      assert result.id == user.profile.id
     end
 
-    test "delete_profile/1 deletes the profile" do
-      profile = profile_fixture()
-      assert {:ok, %Profile{}} = Membership.delete_profile(profile)
-      assert_raise Ecto.NoResultsError, fn -> Membership.get_profile!(profile.id) end
-    end
-
-    test "change_profile/1 returns a profile changeset" do
-      profile = profile_fixture()
-      assert %Ecto.Changeset{} = Membership.change_profile(profile)
+    test "get_user/1 with an non_existing profile slug" do
+      assert_raise Ecto.NoResultsError, fn ->
+        Membership.get_profile!("burt_reynolds")
+      end
     end
   end
 end

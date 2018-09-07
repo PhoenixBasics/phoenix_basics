@@ -4,16 +4,16 @@ defmodule Basics.Membership do
   """
 
   import Ecto.Query
+  alias Basics.Membership.Profile
   alias Basics.Membership.User
   alias Basics.Repo
 
   def get_user(id) do
     User
+    |> preload([:profile])
     |> where([user], user.id == ^id)
     |> Repo.one()
   end
-
-  alias Basics.Membership.Profile
 
   @doc """
   Returns the list of profiles.
@@ -25,7 +25,9 @@ defmodule Basics.Membership do
 
   """
   def list_profiles do
-    Repo.all(Profile)
+    Profile
+    |> order_by(:last)
+    |> Repo.all()
   end
 
   @doc """
@@ -42,24 +44,11 @@ defmodule Basics.Membership do
       ** (Ecto.NoResultsError)
 
   """
-  def get_profile!(id), do: Repo.get!(Profile, id)
-
-  @doc """
-  Creates a profile.
-
-  ## Examples
-
-      iex> create_profile(%{field: value})
-      {:ok, %Profile{}}
-
-      iex> create_profile(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_profile(attrs \\ %{}) do
-    %Profile{}
-    |> Profile.changeset(attrs)
-    |> Repo.insert()
+  def get_profile!(id) when is_integer(id), do: Repo.get!(Profile, id)
+  def get_profile!(slug) do
+    Profile
+    |> where([profile], profile.slug == ^slug)
+    |> Repo.one!
   end
 
   @doc """
@@ -74,30 +63,18 @@ defmodule Basics.Membership do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_profile(%Profile{} = profile, attrs) do
+  def update_profile(%User{profile: profile}, params) when not is_nil(profile) do
     profile
-    |> Profile.changeset(attrs)
+    |> Profile.changeset(params)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Profile.
-
-  ## Examples
-
-      iex> delete_profile(profile)
-      {:ok, %Profile{}}
-
-      iex> delete_profile(profile)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_profile(%Profile{} = profile) do
-    Repo.delete(profile)
-  end
-
-  @doc """
   Returns an `%Ecto.Changeset{}` for tracking profile changes.
+
+  Expects a Membership.User.  If the User has a profile the changeset will be
+  for that profile.  Otherwise this method will generate a new profile for the
+  user.
 
   ## Examples
 
@@ -105,7 +82,14 @@ defmodule Basics.Membership do
       %Ecto.Changeset{source: %Profile{}}
 
   """
-  def change_profile(%Profile{} = profile) do
+  def change_profile(%User{profile: profile}) when not is_nil(profile) do
     Profile.changeset(profile, %{})
+  end
+
+  def change_profile(user) do
+    %Profile{}
+    |> Profile.init_changeset(%{user_id: user.id, slug: "user_#{user.id}"})
+    |> Repo.insert!()
+    |> Profile.changeset(%{})
   end
 end
