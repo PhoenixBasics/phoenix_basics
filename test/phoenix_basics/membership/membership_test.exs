@@ -56,11 +56,15 @@ defmodule Basics.MembershipTest do
       description: "I'm an Elixir Developer who loves BBQ",
       first: "Brian",
       github: "mcelaney",
-      image: "n/a",
       last: "McElaney",
       slug: "mac2",
       title: "Director, Product Development",
-      twitter: "mcelaney"
+      twitter: "mcelaney",
+      image: %Plug.Upload{
+        content_type: "image/jpeg",
+        filename: "BrianMcElaney.jpg",
+        path: Path.join(:code.priv_dir(:phoenix_basics), "/repo/seeds/images/BrianMcElaney.jpg")
+      }
     }
 
     @invalid_attrs %{slug: nil}
@@ -87,7 +91,7 @@ defmodule Basics.MembershipTest do
       assert user.profile.description == "I'm an Elixir Developer who loves BBQ"
       assert user.profile.first == "Brian"
       assert user.profile.github == "mcelaney"
-      assert user.profile.image == "n/a"
+      assert user.profile.image[:file_name] == "BrianMcElaney.jpg"
       assert user.profile.last == "McElaney"
       assert user.profile.slug == "mac2"
       assert user.profile.title == "Director, Product Development"

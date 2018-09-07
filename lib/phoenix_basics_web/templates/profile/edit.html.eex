@@ -1,7 +1,7 @@
 <div class="container">
   <h2>Edit Profile</h2>
 
-  <%= form_for @changeset, profile_path(@conn, :update), fn f -> %>
+  <%= form_for @changeset, profile_path(@conn, :update), [multipart: true], fn f -> %>
     <%= if @changeset.action do %>
       <div class="alert alert-danger">
         <p>Oops, something went wrong! Please check the errors below.</p>
@@ -28,7 +28,7 @@
 
     <div class="form-group">
       <%= label f, :image, class: "control-label" %>
-      <%= text_input f, :image, class: "form-control" %>
+      <%= file_input f, :image, class: "form-control" %>
       <%= error_tag f, :image %>
     </div>
 

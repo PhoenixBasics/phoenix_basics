@@ -47,6 +47,22 @@ defmodule Basics.Mixfile do
       {:comeonin, "~>4.0"},
       {:guardian, "~> 1.0"},
 
+      # For S3 integration and image uploads
+      # File upload
+      {:arc, "~> 0.10"},
+      # Ecto Type
+      {:arc_ecto, "~> 0.10"},
+      # Aws
+      {:ex_aws, "~> 2.0"},
+      # S3
+      {:ex_aws_s3, "~> 2.0"},
+      # API HTTP client
+      {:hackney, "~> 1.9"},
+      # Fast JSON Parser
+      {:poison, "~> 3.0"},
+      # XML Parsing
+      {:sweet_xml, "~> 0.6"},
+
       # Linting
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false}
     ]

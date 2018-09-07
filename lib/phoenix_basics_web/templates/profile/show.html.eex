@@ -1,7 +1,7 @@
 <div class="container speaker-details">
   <div class="card details">
     <div class="card-body">
-      <img src="https://picsum.photos/200/200" class="rounded-circle speaker-details__pic">
+      <img src="<%= profile_image(@profile) %>" class="rounded-circle speaker-details__pic">
       <div class="clearfix"></div>
       <div class="speaker__info">
         <h4><%= "#{@profile.first} #{@profile.last}" %></h4>

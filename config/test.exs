@@ -21,3 +21,7 @@ config :phoenix_basics, Basics.Repo,
 config :phoenix_basics, BasicsWeb.Guardian.Tokenizer,
   issuer: "phoenix_basics",
   secret_key: "x"
+
+config :arc, bucket: "fawkesapp-test"
+
+import_config "test.secret.exs"
