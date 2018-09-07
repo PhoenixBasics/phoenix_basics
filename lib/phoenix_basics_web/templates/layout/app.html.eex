@@ -27,7 +27,7 @@
             <li><%= link gettext("About"), to: page_path(@conn, :index) %></li>
             <li><a href="/categories">Categories</a></li>
             <li><a href="/speakers">Speakers</a></li>
-            <li><a href="/schedule_slots">Talks</a></li>
+            <li><%= link gettext("Schedule"), to: schedule_path(@conn, :index)%></li>
           <%= if is_nil @conn.assigns[:current_user] do %>
             <li><%= link gettext("Create Account"), to: signup_user_path(@conn, :new) %></li>
             <li><%= link gettext("Log In"), to: auth_user_path(@conn, :new) %></li>

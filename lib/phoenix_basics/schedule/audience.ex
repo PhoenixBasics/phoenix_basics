@@ -12,7 +12,7 @@ defmodule Basics.Schedule.Audience do
     field(:name, :string)
     field(:slug, :string)
 
-    many_to_many :events, Event, join_through: "audiences_events"
+    many_to_many(:events, Event, join_through: "audiences_events")
 
     timestamps()
   end

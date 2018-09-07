@@ -47,6 +47,9 @@ defmodule Basics.Mixfile do
       {:comeonin, "~>4.0"},
       {:guardian, "~> 1.0"},
 
+      # View Formatting
+      {:timex_ecto, "~> 3.3"},
+
       # For S3 integration and image uploads
       # File upload
       {:arc, "~> 0.10"},

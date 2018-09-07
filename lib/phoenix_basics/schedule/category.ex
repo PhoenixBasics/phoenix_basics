@@ -11,7 +11,7 @@ defmodule Basics.Schedule.Category do
     field(:name, :string)
     field(:slug, :string)
 
-    many_to_many :events, Event, join_through: "categories_events"
+    many_to_many(:events, Event, join_through: "categories_events")
 
     timestamps()
   end

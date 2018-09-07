@@ -20,7 +20,7 @@ defmodule Basics.Schedule.Speaker do
     field(:title, :string)
     field(:twitter, :string)
 
-    many_to_many :events, Event, join_through: "events_speakers"
+    many_to_many(:events, Event, join_through: "events_speakers")
 
     timestamps()
   end
