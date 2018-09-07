@@ -1,38 +1,13 @@
-<h2>Listing Profiles</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Slug</th>
-      <th>Image</th>
-      <th>First</th>
-      <th>Last</th>
-      <th>Company</th>
-      <th>Title</th>
-      <th>Github</th>
-      <th>Twitter</th>
-      <th>Description</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for profile <- @profiles do %>
-    <tr>
-      <td><%= profile.slug %></td>
-      <td><%= profile.image %></td>
-      <td><%= profile.first %></td>
-      <td><%= profile.last %></td>
-      <td><%= profile.company %></td>
-      <td><%= profile.title %></td>
-      <td><%= profile.github %></td>
-      <td><%= profile.twitter %></td>
-      <td><%= profile.description %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: profile_path(@conn, :show, profile), class: "btn btn-default btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+<div class="container speaker-index">
+  <h2 class="subheader">Members</h2>
+  <div class="row attendee">
+    <%= for profile <- @profiles do %>
+        <div class="card col-xs-4">
+          <div class="card-body ">
+            <img src="https://picsum.photos/200/200" class="rounded-circle">
+            <h4><%= link "#{profile.first} #{profile.last}", to: profile_path(@conn, :show, profile.slug) %></h4>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
