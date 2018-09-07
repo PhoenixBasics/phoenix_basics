@@ -5,10 +5,13 @@ defmodule Basics.Schedule.Category do
 
   use Ecto.Schema
   import Ecto.Changeset
+  alias Basics.Schedule.Event
 
   schema "categories" do
     field(:name, :string)
     field(:slug, :string)
+
+    many_to_many :events, Event, join_through: "categories_events"
 
     timestamps()
   end
