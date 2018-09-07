@@ -49,7 +49,8 @@ hr {
   color: #8573c6;
 }
 
-.btn {
+
+.btn, .pill {
   background-color: #284c6e;
   border: 0;
   color: #FFF;
@@ -214,6 +215,10 @@ hr {
   width: 60px;
   padding: 0;
   vertical-align: middle;
+}
+.dates .card.active {
+  border: 2px solid #284c6e;
+  background-color: #ccffd2;
 }
 
 .dates .card-body {
