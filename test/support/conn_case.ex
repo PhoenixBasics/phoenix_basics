@@ -22,13 +22,14 @@ defmodule BasicsWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import BasicsWeb.Router.Helpers
+      alias Basics.Signup
 
       # The default endpoint for testing
       @endpoint BasicsWeb.Endpoint
 
       def authed_conn(conn) do
         user_params = %{password: "some password", username: "some username"}
-        Basics.Signup.create_user(user_params)
+        Signup.create_user(user_params)
         authed_conn = post(conn, auth_user_path(conn, :create), user: user_params)
       end
     end

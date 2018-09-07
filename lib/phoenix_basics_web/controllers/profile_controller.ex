@@ -14,8 +14,10 @@ defmodule BasicsWeb.ProfileController do
   end
 
   def edit(conn, _params) do
-    render(conn, "edit.html", profile: conn |> current_user() |> Map.get(:profile),
-                              changeset: conn |> current_user() |> Membership.change_profile())
+    render(conn, "edit.html",
+      profile: conn |> current_user() |> Map.get(:profile),
+      changeset: conn |> current_user() |> Membership.change_profile()
+    )
   end
 
   def update(conn, %{"profile" => params}) do

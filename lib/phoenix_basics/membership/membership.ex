@@ -45,10 +45,11 @@ defmodule Basics.Membership do
 
   """
   def get_profile!(id) when is_integer(id), do: Repo.get!(Profile, id)
+
   def get_profile!(slug) do
     Profile
     |> where([profile], profile.slug == ^slug)
-    |> Repo.one!
+    |> Repo.one!()
   end
 
   @doc """

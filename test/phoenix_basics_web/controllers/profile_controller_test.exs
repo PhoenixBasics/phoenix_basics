@@ -2,8 +2,8 @@ defmodule BasicsWeb.ProfileControllerTest do
   use BasicsWeb.ConnCase
 
   alias Basics.Membership
-  alias Basics.Membership.User
   alias Basics.Membership.Profile
+  alias Basics.Membership.User
   alias Basics.Repo
 
   @update_attrs %{
@@ -47,8 +47,8 @@ defmodule BasicsWeb.ProfileControllerTest do
 
       assert html_response(conn, 200) =~ "Edit Profile"
     end
-
   end
+
   # test "index lists all profiles", %{conn: conn} do
   #   conn = get(conn, profile_path(conn, :index))
   #   assert html_response(conn, 200) =~ "Listing Profiles"

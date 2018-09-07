@@ -22,6 +22,7 @@ defmodule Basics.MembershipTest do
 
       assert %User{} = result
       assert result.id == user.id
+      assert result.profile == nil
     end
 
     test "authenticate_user/1 returns nil if not found", %{user: user} do
