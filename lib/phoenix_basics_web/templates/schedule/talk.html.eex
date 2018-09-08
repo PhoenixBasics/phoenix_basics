@@ -1,12 +1,5 @@
 <div class="schedule__talk">
-  <div class="float-right schedule__talk-link">
-    <i class="fas fa-angle-right"></i>
-  </div>
-  <a href="/talks/<%= @talk.id %>">
-    <h3 class="schedule__talk-title">
-      <%= @talk.title %>
-    </h3>
-  </a>
+  <%= link content_tag(:h3, @talk.title, class: "schedule__talk-title"), to: schedule_path(@conn, :show, @talk.slug) %>
 
   <div class="schedule__details">
     <%= full_name(@talk.speakers) %> &nbsp; | &nbsp; <%= @talk.location.name %>

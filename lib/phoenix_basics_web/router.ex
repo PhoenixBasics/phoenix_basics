@@ -34,7 +34,7 @@ defmodule BasicsWeb.Router do
     pipe_through([:browser, :guardian])
 
     get("/", PageController, :index)
-    get("/schedule", ScheduleController, :index)
+    resources("/schedule", ScheduleController, only: [:index, :show])
   end
 
   scope "/signup", BasicsWeb.Signup, as: :signup do

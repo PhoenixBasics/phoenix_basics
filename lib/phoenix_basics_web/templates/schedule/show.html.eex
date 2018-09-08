@@ -1,0 +1,29 @@
+<div class="container talk">
+  <div class="card section">
+    <p class="subtext"><%= Timex.format!(@talk.time_slot.start, "%-I:%M %p", :strftime)%> - <%= Timex.format!(@talk.time_slot.finish, "%-I:%M %p", :strftime) %></p>
+    <h2><%= @talk.title %></h2>
+    <p class="smalltext"><strong>Location</strong>: <%= @talk.location.name %></p>
+    <p class="icons">
+      <%= meta_links(@conn, @talk.audiences, "audience") %>
+      <%= meta_links(@conn, @talk.categories, "category") %>
+    </p>
+  </div>
+  <hr/>
+  <h4 class="subheader">About the event</h4>
+  <div class="card details">
+    <div class="card-body">
+      <p>
+        <%= if is_nil @talk.description do %>
+          No description yet
+        <% else %>
+          <%= raw(@talk.description) %>
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <hr/>
+  <h4 class="subheader">Speakers/Trainers</h4>
+  <%= for speaker <- @talk.speakers do %>
+    <%= render BasicsWeb.ProfileView, "show.html", profile: speaker %>
+  <% end %>
+</div>

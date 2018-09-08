@@ -2,16 +2,18 @@
   <div class="section-white">
     <div class="container">
       <div class="d-flex justify-content-center align-items-center dates">
-        <i class="fas fa-arrow-left"></i>
-        <%= for date <- @schedule_dates do %>
-          <div class="card">
+        <%= yesterday_link(@conn) %>
+
+        <%= for date <- @conn.assigns.current_schedule_params[:all_dates] do %>
+          <div class="card<%= date_link_class(@conn, date) %>">
             <div class="card-body"><%= date_link(@conn, date) %></div>
           </div>
         <% end %>
-        <i class="fas fa-arrow-right"></i>
+
+        <%= tomorrow_link(@conn) %>
       </div>
       <div class="d-flex justify-content-center talk-index__tab">
-        <a href="/schedule_slots" class="talk-tab__link talk-tab__link-active"><h4 class="subheader">Full Schedule</h4></a>
+        <%= link content_tag(:h4, "Full Schedule", class: "subheader"), to: schedule_path(@conn, :index), class: "talk-tab__link talk-tab__link-active" %>
         <%= if @conn.assigns[:current_user] do %>
           <a href="/agenda" class="talk-tab__link"><h4 class="subheader">My Agenda</h4></a>
         <% end %>
@@ -20,7 +22,10 @@
   </div>
 
   <div class="container schedule">
-    <h2 class="schedule__date"><%= @current_date %></h2>
+    <h2 class="schedule__date"><%= Timex.format!(@conn.assigns.current_schedule_params[:day], "%A  %m/%d/%y", :strftime) %></h2>
+    <%= unless filter_tags(@conn) == [] do %>
+      <div class="card">Included: <%= filter_tags(@conn) %></div>
+    <% end %>
     <%= for slot <- @time_slots do %>
       <div class="card">
         <div class="card-header">
@@ -32,7 +37,7 @@
           <%= for event <- slot.events do %>
             <%= if event.is_talk do %>
               <%= render "talk.html", conn: @conn, talk: event %>
-            <%= else %>
+            <% else %>
               <h3 class="gray"><%= event.title %></h3>
             <% end %>
           <% end %>
